@@ -215,11 +215,93 @@ const refreshAccessToken = asyncHandler(async(req, res) => {
 })
 
 
+const changeCurrentPassword = asyncHandler(async(req, res) => {
+    const {oldPass, newPass} = req.body
+
+    const user  = await User.findById(req.user?._id)
+    const isPasswordCorrect = await user.isPasswordCorrect(oldPass)
+
+    if (!isPasswordCorrect) {
+        throw new ApiError(400, "invalid pass")
+    }
+
+    user.password = newPass
+
+    await user.save({validateBeforeSave: false})
+
+    return res.status(200)
+    .json(new ApiResponse(200, {}, "pass changed successfully"))
+     
+
+})
+
+
+const getCurrentUser = asyncHandler(async(req, res) => {
+    return res.status(200)
+    .json(200, req.user, "Current user fetched successfully")
+})
+
+
+const updateAccountDetails = asyncHandler(async(req, res) => {
+    const {fullName, email} = req.body
+
+    if (!fullName || !email) {
+        throw new ApiError(400, "All fields required")
+    }
+
+    const user = await User.findByIdAndUpdate(req.user?._id, {
+        $set: {
+            fullName,
+            email
+        }
+    }, {new: true}).select("-password")
+
+    return res.status(200)
+    .json(new ApiResponse(200, user, "details updated"))
+
+})
+
+
+const updatePfp = asyncHandler(async(req, res) => {
+
+    const pfpLocalPath = req.file?.path
+
+    if(!pfpLocalPath) {
+        throw new ApiError(400, "pfp file is missing")
+    }
+
+    const pfp = await uploadOnCloudinary(pfpLocalPath)
+
+    if (!pfp.url) {
+        throw new ApiError(400, "error while uploading")
+    }
+
+
+    const user = await User.findByIdAndUpdate(req.user?._id,
+        {
+            $set: {
+                pfp: pfp.url
+            }
+        },
+        {
+            new: true
+        }
+    ).select("-password")
+
+    return res.status(200)
+    .json(new ApiResponse(200, user, "pfp updated successfully"))
+
+})
+
 
 
 export {
     registerUser,
     loginUser,
     logoutUser,
-    refreshAccessToken
+    refreshAccessToken,
+    changeCurrentPassword,
+    getCurrentUser,
+    updateAccountDetails,
+    updatePfp
 }

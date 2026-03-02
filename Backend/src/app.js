@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors" 
 import cookieParser from "cookie-parser"
+import categoryRoutes from "./routes/category.routes.js"
 
 
 const app = express()
@@ -23,6 +24,8 @@ import userRouter from "./routes/user.routes.js"
 // routes declaration
 
 app.use("/api/v1/users", userRouter)
+
+app.use("/api/v1/categories", categoryRoutes)
 
 
 export { app }

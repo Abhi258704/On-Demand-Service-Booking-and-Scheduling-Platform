@@ -13,6 +13,9 @@ const categorySchema = new mongoose.Schema({
     isActive: {
         type: Boolean,
         default: true
+    },
+    coverImage: {
+        type: String
     }
 
     
