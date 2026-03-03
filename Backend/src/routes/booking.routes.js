@@ -4,7 +4,8 @@ import {
     createBooking,
     getMyBookings,
     approveBooking,
-    cancelBooking
+    cancelBooking,
+    getAllBookings
 } from "../controllers/booking.controller.js"
 
 const router = Router()
@@ -15,6 +16,9 @@ router.route("/create")
 
 router.route("/my-bookings")
     .get(verifyJwt, getMyBookings)
+
+router.route("/allBookings")
+    .get(verifyJwt, getAllBookings)
 
 
 // Admin routes

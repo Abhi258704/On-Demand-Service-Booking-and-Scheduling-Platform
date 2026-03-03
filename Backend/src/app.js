@@ -33,4 +33,16 @@ app.use("/api/v1/services", serviceRoutes)
 
 app.use("/api/v1/bookings", bookingRoutes)
 
+
+// Global Error Middleware
+
+app.use((err, req, res, next) => {
+   res.status(err.statusCode || 500).json({
+      success: false,
+      message: err.message
+   })
+})
+
+
+
 export { app }

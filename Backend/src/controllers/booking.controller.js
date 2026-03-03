@@ -57,6 +57,23 @@ const getMyBookings = asyncHandler(async (req, res) => {
 })
 
 
+// Admin - Get All Bookings
+const getAllBookings = asyncHandler(async (req, res) => {
+
+    if (req.user.role !== "admin") {
+        throw new ApiError(403, "Only admin can view all bookings")
+    }
+
+    const bookings = await Booking.find()
+        .populate("user", "fullName email")
+        .populate("service", "title price duration")
+
+    return res.status(200).json(
+        new ApiResponse(200, bookings, "All bookings fetched successfully")
+    )
+})
+
+
 // Admin Approve Booking
 const approveBooking = asyncHandler(async (req, res) => {
 
@@ -109,5 +126,6 @@ export {
     createBooking,
     getMyBookings,
     approveBooking,
-    cancelBooking
+    cancelBooking,
+    getAllBookings
 }
