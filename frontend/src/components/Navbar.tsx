@@ -15,10 +15,24 @@ export default function Navbar() {
 
         {/* Links */}
         <div className="hidden md:flex gap-8 text-gray-600 font-medium">
-          <Link href="/" className="hover:text-black transition">Home</Link>
-          <Link href="/services" className="hover:text-black transition">Services</Link>
-          <Link href="/categories" className="hover:text-black transition">Categories</Link>
-          <Link href="/bookings" className="hover:text-black transition">Bookings</Link>
+          <Link href="/" className="hover:text-black transition">
+            Home
+          </Link>
+
+          {/* ✅ FIXED */}
+          <Link href="/services" className="hover:text-black transition">
+            Services
+          </Link>
+
+          {/* Optional */}
+          {/* <Link href="/categories" className="hover:text-black transition">
+            Categories
+          </Link> */}
+
+          {/* Later you can protect this */}
+          <Link href="/login" className="hover:text-black transition">
+            Bookings
+          </Link>
         </div>
 
         {/* Buttons */}

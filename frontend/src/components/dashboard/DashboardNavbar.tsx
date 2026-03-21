@@ -1,8 +1,24 @@
 "use client"
 
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+
+
+
 
 export default function DashboardNavbar() {
+
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    await fetch("http://localhost:8000/api/v1/users/logout", {
+      method: "POST",
+      credentials: "include"
+    })
+
+    router.push("/") // redirect to landing page
+  }
+
   return (
     <div className="flex justify-center pt-6">
 
@@ -18,7 +34,10 @@ export default function DashboardNavbar() {
             Home
           </Link>
 
-          <button className="bg-black text-white px-4 py-2 rounded-lg text-sm">
+          <button
+            onClick={handleLogout}
+            className="bg-black text-white px-4 py-2 rounded-lg text-sm"
+          >
             Logout
           </button>
 

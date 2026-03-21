@@ -6,121 +6,105 @@ import Image from "next/image"
 import Link from "next/link"
 
 type Service = {
-    _id: string
-    title: string
-    description: string
-    price: number
-    duration: number
-    serviceImage: string
+  _id: string
+  title: string
+  description: string
+  price: number
+  duration: number
+  serviceImage: string
 }
 
-export default function ServiceDetails() {
+export default function ServiceDetailsPage() {
 
-    const params = useParams()
-    const serviceId = Array.isArray(params.id) ? params.id[0] : params.id
+  const params = useParams()
+  const serviceId = params.id
 
-    const [service, setService] = useState<Service | null>(null)
-    const [loading, setLoading] = useState(true)
+  const [service, setService] = useState<Service | null>(null)
+  const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
+  useEffect(() => {
 
-        async function fetchService() {
-            try {
+    async function fetchService() {
+      try {
 
-                const res = await fetch("http://localhost:8000/api/v1/services/viewServices")
-                const data = await res.json()
-
-                console.log("Services:", data.data)
-                console.log("Service ID from URL:", serviceId)
-
-                const foundService = data.data.find(
-                    (s: Service) => String(s._id) === String(serviceId)
-                )
-
-                console.log("Found Service:", foundService)
-
-                if (foundService) {
-                    setService(foundService)
-                }
-
-            } catch (error) {
-                console.error("Error loading service:", error)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        fetchService()
-
-    }, [serviceId])
-
-
-    if (loading) {
-        return (
-            <p className="text-gray-500">
-                Loading service...
-            </p>
+        const res = await fetch(
+          "http://localhost:8000/api/v1/services/viewServices"
         )
+
+        const data = await res.json()
+
+        const foundService = data.data.find(
+          (s: Service) => s._id === serviceId
+        )
+
+        setService(foundService)
+
+      } catch (error) {
+        console.error("Error loading service:", error)
+      } finally {
+        setLoading(false)
+      }
     }
 
-    if (!service) {
-        return (
-            <p className="text-red-500">
-                Service not found
-            </p>
-        )
-    }
+    fetchService()
 
-    return (
-        <div>
+  }, [serviceId])
 
-            {/* Title */}
-            <h1 className="text-2xl font-bold mb-6">
-                {service.title}
-            </h1>
+  if (loading) {
+    return <p className="text-gray-500">Loading service...</p>
+  }
 
-            <div className="grid md:grid-cols-2 gap-8">
+  if (!service) {
+    return <p className="text-red-500">Service not found</p>
+  }
 
-                {/* Image */}
-                <div className="relative w-full h-64">
+  return (
+    <div className="max-w-5xl mx-auto">
 
-                    <Image
-                        src={service.serviceImage}
-                        alt={service.title}
-                        fill
-                        priority
-                        sizes="(max-width: 768px) 100vw, 50vw"
-                        className="object-cover rounded-xl"
-                    />
+      <h1 className="text-3xl font-bold mb-6">
+        {service.title}
+      </h1>
 
-                </div>
+      <div className="grid md:grid-cols-2 gap-10">
 
-                {/* Info */}
-                <div>
+        {/* Service Image */}
+        <div className="relative w-full h-80">
 
-                    <p className="text-gray-600 mb-4">
-                        {service.description}
-                    </p>
-
-                    <p className="text-lg font-semibold">
-                        ₹{service.price}
-                    </p>
-
-                    <p className="text-gray-500 mb-6">
-                        Duration: {service.duration} minutes
-                    </p>
-
-                    <Link
-                        href={`/dashboard/services/${service._id}/book`}
-                        className="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition"
-                    >
-                        Book Service
-                    </Link>
-
-                </div>
-
-            </div>
+          <Image
+            src={service.serviceImage}
+            alt={service.title}
+            fill
+            className="object-cover rounded-xl"
+          />
 
         </div>
-    )
+
+        {/* Service Info */}
+        <div>
+
+          <p className="text-gray-600 mb-4">
+            {service.description}
+          </p>
+
+          <p className="text-2xl font-semibold mb-2">
+            ₹{service.price}
+          </p>
+
+          <p className="text-gray-500 mb-6">
+            Duration: {service.duration} minutes
+          </p>
+
+          <Link
+            href={`/dashboard/services/${service._id}/book`}
+            className="inline-block bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition"
+          >
+            Book Service
+          </Link>
+
+        </div>
+
+      </div>
+
+    </div>
+  )
 }

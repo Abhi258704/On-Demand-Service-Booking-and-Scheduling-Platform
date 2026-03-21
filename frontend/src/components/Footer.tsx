@@ -30,9 +30,11 @@ export default function Footer() {
 
             <div className="flex flex-col gap-2 text-gray-600 text-sm">
               <Link href="/" className="hover:text-black">Home</Link>
-              <Link href="/services" className="hover:text-black">Services</Link>
-              <Link href="/categories" className="hover:text-black">Categories</Link>
-              <Link href="/bookings" className="hover:text-black">My Bookings</Link>
+              <Link href="/services"
+              className="hover:text-black">Services</Link>
+              {/* <Link href="/categories" className="hover:text-black">Categories</Link> */}
+              <Link href="/login"
+              className="hover:text-black">My Bookings</Link>
             </div>
           </div>
 
