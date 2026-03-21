@@ -8,18 +8,18 @@ import jwt from "jsonwebtoken"
 
 
 
-const generateAccessAndRefreshToken = async(userId)  => {
+const generateAccessAndRefreshToken = async (userId) => {
 
     try {
         const user = await User.findById(userId)
         const accessToken = user.generateAccessToken()
         const refreshToken = user.generateRefreshToken()
 
-        user.refreshToken  = refreshToken
-        await user.save({ validateBeforeSave: false})
+        user.refreshToken = refreshToken
+        await user.save({ validateBeforeSave: false })
 
-        return {accessToken, refreshToken}
-        
+        return { accessToken, refreshToken }
+
     } catch (error) {
         throw new ApiError(500, "stww while generating access and refrsh tokens")
     }
@@ -116,12 +116,12 @@ const loginUser = asyncHandler(async (req, res) => {
     if (!user) {
         throw new ApiError(404, "user does not exist")
     }
-    
-    
+
+
     // check password
 
     const isPasswordValid = await user.isPasswordCorrect(password)
-    
+
     if (!isPasswordValid) {
         throw new ApiError(401, "incorrect password")
     }
@@ -131,7 +131,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const loggedInUSer = await User.findById(user._id).select("-password -refreshToken")
 
-    
+
     // cookies
 
     const options = {
@@ -141,16 +141,16 @@ const loginUser = asyncHandler(async (req, res) => {
 
 
     return res
-    .status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
-    .json(
-        new ApiResponse(200, "user logged in successfully")
-    )
+        .status(200)
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(
+            new ApiResponse(200, "user logged in successfully")
+        )
 })
 
 
-const logoutUser  = asyncHandler(async (req, res) => {
+const logoutUser = asyncHandler(async (req, res) => {
     await User.findByIdAndUpdate(
         req.user._id,
         {
@@ -169,25 +169,25 @@ const logoutUser  = asyncHandler(async (req, res) => {
     }
 
     return res.status(200)
-    .clearCookie("accessToken", options)
-    .clearCookie("refreshToken", options)
-    .json(new ApiResponse(200, {}, "logged out successfully"))   
+        .clearCookie("accessToken", options)
+        .clearCookie("refreshToken", options)
+        .json(new ApiResponse(200, {}, "logged out successfully"))
 })
 
 
-const refreshAccessToken = asyncHandler(async(req, res) => {
+const refreshAccessToken = asyncHandler(async (req, res) => {
     const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken
 
-    if (!incomingRefreshToken){
+    if (!incomingRefreshToken) {
         throw new ApiError(401, "unauthorized request")
     }
 
 
     const decodedToken = jwt.verify(incomingRefreshToken, process.env.REFRESH_TOKEN_SECRET)
-    
+
     const user = await User.findById(decodedToken?._id)
 
-    if (!user) { 
+    if (!user) {
         throw new ApiError(401, "invalid refresh token")
     }
 
@@ -199,26 +199,26 @@ const refreshAccessToken = asyncHandler(async(req, res) => {
         httpOnly: true
     }
 
-    const {accessToken, refreshToken} = await generateAccessAndRefreshToken(user._id)
+    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(user._id)
 
     return res.status(200)
-    .cookie("accessToken", accessToken, options)
-    .cookie("refreshToken", refreshToken, options)
-    .json(
-        new ApiResponse(
-            200,
-            {accessToken, refreshToken},
-            "Acccess Token refrshed"
+        .cookie("accessToken", accessToken, options)
+        .cookie("refreshToken", refreshToken, options)
+        .json(
+            new ApiResponse(
+                200,
+                { accessToken, refreshToken },
+                "Acccess Token refrshed"
+            )
         )
-    )
 
 })
 
 
-const changeCurrentPassword = asyncHandler(async(req, res) => {
-    const {oldPass, newPass} = req.body
+const changeCurrentPassword = asyncHandler(async (req, res) => {
+    const { oldPass, newPass } = req.body
 
-    const user  = await User.findById(req.user?._id)
+    const user = await User.findById(req.user?._id)
     const isPasswordCorrect = await user.isPasswordCorrect(oldPass)
 
     if (!isPasswordCorrect) {
@@ -227,23 +227,28 @@ const changeCurrentPassword = asyncHandler(async(req, res) => {
 
     user.password = newPass
 
-    await user.save({validateBeforeSave: false})
+    await user.save({ validateBeforeSave: false })
 
     return res.status(200)
-    .json(new ApiResponse(200, {}, "pass changed successfully"))
-     
+        .json(new ApiResponse(200, {}, "pass changed successfully"))
+
 
 })
 
 
-const getCurrentUser = asyncHandler(async(req, res) => {
-    return res.status(200)
-    .json(200, req.user, "Current user fetched successfully")
+const getCurrentUser = asyncHandler(async (req, res) => {
+    return res.status(200).json(
+        new ApiResponse(
+            200,
+            req.user,
+            "Current user fetched successfully"
+        )
+    )
 })
 
 
-const updateAccountDetails = asyncHandler(async(req, res) => {
-    const {fullName, email} = req.body
+const updateAccountDetails = asyncHandler(async (req, res) => {
+    const { fullName, email } = req.body
 
     if (!fullName || !email) {
         throw new ApiError(400, "All fields required")
@@ -254,19 +259,19 @@ const updateAccountDetails = asyncHandler(async(req, res) => {
             fullName,
             email
         }
-    }, {new: true}).select("-password")
+    }, { new: true }).select("-password")
 
     return res.status(200)
-    .json(new ApiResponse(200, user, "details updated"))
+        .json(new ApiResponse(200, user, "details updated"))
 
 })
 
 
-const updatePfp = asyncHandler(async(req, res) => {
+const updatePfp = asyncHandler(async (req, res) => {
 
     const pfpLocalPath = req.file?.path
 
-    if(!pfpLocalPath) {
+    if (!pfpLocalPath) {
         throw new ApiError(400, "pfp file is missing")
     }
 
@@ -289,7 +294,7 @@ const updatePfp = asyncHandler(async(req, res) => {
     ).select("-password")
 
     return res.status(200)
-    .json(new ApiResponse(200, user, "pfp updated successfully"))
+        .json(new ApiResponse(200, user, "pfp updated successfully"))
 
 })
 

@@ -53,7 +53,18 @@ const createService = asyncHandler(async (req, res) => {
 // Get All Services
 const getAllServices = asyncHandler(async (req, res) => {
 
-    const services = await Service.find({ isActive: true })
+    const { category } = req.query
+
+    const filter = {
+        isActive: true
+    }
+
+    // 🔥 Apply category filter if exists
+    if (category) {
+        filter.category = category
+    }
+
+    const services = await Service.find(filter)
         .populate("category")
 
     return res.status(200).json(
