@@ -3,6 +3,7 @@ import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { Category } from "../models/category.models.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
+import { Service } from "../models/service.models.js"
 
 
 // Create Category (Admin only)
@@ -60,7 +61,114 @@ const getAllCategories = asyncHandler(async (req, res) => {
 })
 
 
+// Update Category (Admin)
+const updateCategory = asyncHandler(async (req, res) => {
+
+    if (req.user.role !== "admin") {
+        throw new ApiError(403, "Only admin can update category")
+    }
+
+    const { categoryId } = req.params
+    const { name, description } = req.body
+
+    const category = await Category.findById(categoryId)
+
+    if (!category) {
+        throw new ApiError(404, "Category not found")
+    }
+
+    // update text fields
+    if (name) category.name = name
+    if (description) category.description = description
+
+    // update image ONLY if new image uploaded
+    if (req.file) {
+
+        const uploadedImage = await uploadOnCloudinary(req.file.path)
+
+        if (!uploadedImage?.url) {
+            throw new ApiError(400, "Image upload failed")
+        }
+
+        category.coverImage = uploadedImage.url
+    }
+
+    await category.save()
+
+    return res.status(200).json(
+        new ApiResponse(200, category, "Category updated successfully")
+    )
+})
+
+
+// Delete Category (Admin)
+const deleteCategory = asyncHandler(async (req, res) => {
+
+    if (req.user.role !== "admin") {
+        throw new ApiError(403, "Only admin can delete category")
+    }
+
+    const { categoryId } = req.params
+
+    const category = await Category.findById(categoryId)
+
+    if (!category) {
+        throw new ApiError(404, "Category not found")
+    }
+
+    category.isActive = false
+    await category.save()
+
+    return res.status(200).json(
+        new ApiResponse(200, category, "Category deleted successfully")
+    )
+})
+
+
+
+
+
+
+
+
+
+
+
+
+const getCategoryById = asyncHandler(async (req, res) => {
+
+    const { categoryId } = req.params
+
+    const category = await Category.findById(categoryId)
+
+    if (!category) {
+        throw new ApiError(404, "Category not found")
+    }
+
+    return res.status(200).json(
+        new ApiResponse(200, category, "Category fetched successfully")
+    )
+
+})
+
+const getServicesByCategory = asyncHandler(async (req, res) => {
+
+    const { categoryId } = req.params
+
+    const services = await Service.find({
+        category: categoryId
+    })
+
+    return res.status(200).json(
+        new ApiResponse(200, services, "Services fetched successfully")
+    )
+})
+
 export {
     createCategory,
-    getAllCategories
+    getAllCategories,
+    updateCategory,
+    deleteCategory,
+    getCategoryById,
+    getServicesByCategory
 }
