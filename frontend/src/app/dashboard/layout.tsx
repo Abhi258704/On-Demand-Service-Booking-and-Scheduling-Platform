@@ -7,7 +7,12 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <main className="bg-gray-100 min-h-screen">
+    <main
+     className="bg-gray-100 min-h-screen"
+
+  //   className="min-h-screen bg-cover bg-center bg-fixed relative"
+  // style={{ backgroundImage: "url('/bg4.jpg')" }}
+     >
 
       {/* Navbar */}
       <DashboardNavbar />
@@ -21,7 +26,7 @@ export default function DashboardLayout({
           <DashboardSidebar />
 
           {/* Main Content */}
-          <div className="flex-1 bg-white shadow-xl rounded-2xl p-8 overflow-y-auto">
+          <div className="flex-1 bg-white shadow-xl rounded-2xl p-8 overflow-y-auto scroll-smooth">
             {children}
           </div>
 

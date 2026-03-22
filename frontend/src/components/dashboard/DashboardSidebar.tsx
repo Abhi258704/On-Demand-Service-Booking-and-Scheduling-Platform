@@ -25,7 +25,7 @@ export default function DashboardSidebar() {
           </Link>
 
           <Link
-            href="/dashboard/bookings"
+            href="/dashboard/myBookings"
             className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-100"
           >
             <Calendar size={18} />

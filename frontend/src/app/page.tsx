@@ -14,7 +14,13 @@ export default function Home() {
 
   return (
     <>
-      <main className="bg-gray-100 min-h-screen">
+      <main
+       className="bg-gray-100 min-h-screen"
+
+      //  className="min-h-screen bg-cover bg-center bg-fixed"
+      // style={{ backgroundImage: "url('/bg3.jpg')" }}
+       
+       >
 
         <Navbar />
 

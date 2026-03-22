@@ -95,13 +95,29 @@ export default function ServiceCategories() {
               <Link
                 key={cat._id}
                 href={`/services?category=${cat._id}`}
-                className="group bg-gray-50 hover:bg-gray-100 transition rounded-xl p-6 flex flex-col items-center justify-center shadow-sm hover:shadow-md"
+                className="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-md"
               >
-                <div className="text-4xl mb-3">🛠️</div>
 
-                <p className="text-gray-700 font-medium text-sm text-center">
-                  {cat.name}
-                </p>
+                {/* Background Image */}
+                <div
+                  className="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition duration-300"
+                  style={{ backgroundImage: `url(${cat.coverImage})` }}
+                ></div>
+
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-black/40"></div>
+
+                {/* Content */}
+                <div className="relative p-6 flex flex-col items-center justify-center h-32">
+
+                  <div className="text-4xl mb-2">🛠️</div>
+
+                  <p className="text-white font-medium text-sm text-center">
+                    {cat.name}
+                  </p>
+
+                </div>
+
               </Link>
             ))}
 
