@@ -33,3 +33,22 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: #c05209;
+  height: 3px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #000, 0 0 5px #000;
+}

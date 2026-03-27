@@ -71,7 +71,7 @@ export default function BookServicePage() {
         </p>
 
         <Link
-          href="/dashboard/bookings"
+          href="/dashboard/myBookings"
           className="bg-black text-white px-6 py-3 rounded-lg hover:bg-gray-800 transition"
         >
           Go to My Bookings
