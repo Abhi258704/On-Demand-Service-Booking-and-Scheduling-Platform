@@ -122,10 +122,34 @@ const cancelBooking = asyncHandler(async (req, res) => {
 })
 
 
+const updateBookingStatus = asyncHandler(async (req, res) => {
+
+    if (req.user.role !== "admin") {
+        throw new ApiError(403, "Only admin can update booking status")
+    }
+
+    const { bookingId } = req.params
+    const { status } = req.body
+
+    const booking = await Booking.findById(bookingId)
+
+    if (!booking) {
+        throw new ApiError(404, "Booking not found")
+    }
+
+    booking.status = status
+    await booking.save()
+
+    return res.status(200).json(
+        new ApiResponse(200, booking, "Booking status updated")
+    )
+})
+
 export {
     createBooking,
     getMyBookings,
     approveBooking,
     cancelBooking,
-    getAllBookings
+    getAllBookings,
+    updateBookingStatus
 }
