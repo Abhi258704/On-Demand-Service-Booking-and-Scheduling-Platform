@@ -3,12 +3,8 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-type Props = {
-  open: boolean
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
 
-export default function AdminSidebar({ open, setOpen }: Props) {
+export default function AdminSidebar() {
 
   const pathname = usePathname()
 
@@ -21,29 +17,17 @@ export default function AdminSidebar({ open, setOpen }: Props) {
 
   return (
     <>
-      {/* Overlay for mobile */}
-      {open && (
-        <div
-          onClick={() => setOpen(false)}
-          className="fixed inset-0 bg-black/40 z-40 md:hidden"
-        />
-      )}
 
       <aside
-        className={`
-    fixed md:static top-0 left-0 h-full w-56 shrink-0 bg-white shadow-lg p-4
-    transform transition-transform duration-300 z-50
-    ${open ? "translate-x-0" : "-translate-x-full"}
-    md:translate-x-0
-  `}
+         className="w-56 bg-white shadow-lg rounded-xl p-4 h-fit"
       >
-        {/* Close button (mobile only) */}
+        {/* Close button (mobile only)
         <button
           onClick={() => setOpen(false)}
           className="md:hidden mb-4 text-lg"
         >
           ✕
-        </button>
+        </button> */}
 
         <h2 className="font-bold text-lg mb-6">
           Admin Panel

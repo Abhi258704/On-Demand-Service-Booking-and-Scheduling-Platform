@@ -2,15 +2,13 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 
-type Props = {
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
 
-
-export default function AdminNavbar({ setOpen }: Props) {
-
+export default function AdminNavbar() {
+  
+  const [open, setOpen] = useState(false)
   const router = useRouter()
 
   const handleLogout = async () => {
