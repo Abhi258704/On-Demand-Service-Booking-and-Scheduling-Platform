@@ -4,14 +4,17 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 
 
+type Props = {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
 
 
-export default function DashboardNavbar() {
+export default function DashboardNavbar({ setOpen }: Props) {
 
   const router = useRouter()
 
   const handleLogout = async () => {
-    await fetch("${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/logout", {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/logout`, {
       method: "POST",
       credentials: "include"
     })
@@ -23,6 +26,8 @@ export default function DashboardNavbar() {
     <div className="flex justify-center pt-6">
 
       <div className="w-[90%] max-w-6xl bg-white shadow-lg rounded-2xl px-8 py-4 flex justify-between items-center">
+
+        {/* Hamburger for mobile */} <button onClick={() => setOpen(true)} className="md:hidden text-2xl" > ☰ </button>
 
         <Link href="/" className="font-bold text-lg">
           ServiceHub
