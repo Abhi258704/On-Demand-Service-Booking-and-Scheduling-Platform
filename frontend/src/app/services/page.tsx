@@ -1,10 +1,9 @@
-"use client"
-export const dynamic = "force-dynamic"
 
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import Image from "next/image"
 import Navbar from "@/components/Navbar"
+import { Suspense } from "react"
 
 type Service = {
 _id: string
@@ -19,7 +18,8 @@ name: string
 }
 }
 
-export default function ServicesPage() {
+function ServicesPageContent() {
+"use client"
 
 const [services, setServices] = useState<Service[]>([])
 const [loading, setLoading] = useState(true)
@@ -165,4 +165,12 @@ return (
 
 </div>
 )
+}
+
+export default function ServicesPage() {
+  return (
+    <Suspense fallback={<div className="p-10">Loading...</div>}>
+      <ServicesPageContent />
+    </Suspense>
+  )
 }
