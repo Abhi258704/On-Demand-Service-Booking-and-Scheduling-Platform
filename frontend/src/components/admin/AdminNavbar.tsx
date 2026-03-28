@@ -9,7 +9,7 @@ type Props = {
 }
 
 
-export default function DashboardNavbar({ setOpen }: Props) {
+export default function AdminNavbar({ setOpen }: Props) {
 
   const router = useRouter()
 
