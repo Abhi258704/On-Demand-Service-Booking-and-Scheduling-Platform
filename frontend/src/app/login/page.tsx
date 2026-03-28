@@ -50,13 +50,13 @@ export default function LoginPage() {
         return
       }
 
-      const userRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/current-user`,
-        { credentials: "include" }
-      )
+      // const userRes = await fetch(
+      //   `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/current-user`,
+      //   { credentials: "include" }
+      // )
 
-      const userData = await userRes.json()
-      const user = userData?.data
+      // const userData = await userRes.json()
+      const user = data?.data
 
       if (!user) {
         setError("Unable to fetch user data")
