@@ -1,11 +1,10 @@
-
+"use client"
 
 
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import Image from "next/image"
 import Link from "next/link"
-import { Suspense } from "react"
 
 type Service = {
   _id: string
@@ -20,8 +19,8 @@ type Service = {
   }
 }
 
-function ServicesPageContent() {
-  "use client"
+export default function ServicesPageContent() {
+
 
   const [services, setServices] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
@@ -137,13 +136,5 @@ function ServicesPageContent() {
       )}
 
     </div>
-  )
-}
-
-export default function ServicesPage() {
-  return (
-    <Suspense fallback={<div className="p-10">Loading...</div>}>
-      <ServicesPageContent />
-    </Suspense>
   )
 }
