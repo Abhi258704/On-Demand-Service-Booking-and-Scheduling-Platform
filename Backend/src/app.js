@@ -1,5 +1,5 @@
 import express from "express";
-import cors from "cors" 
+import cors from "cors"
 import cookieParser from "cookie-parser"
 import categoryRoutes from "./routes/category.routes.js"
 import serviceRoutes from "./routes/service.routes.js"
@@ -9,12 +9,14 @@ import adminRoutes from "./routes/admin.routes.js"
 const app = express()
 
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
+   origin: [
+      "https://on-demand-service-booking-and-sched.vercel.app"
+   ],
+   credentials: true
 }))
 
-app.use(express.json({limit: "16kb"}))
-app.use(express.urlencoded({extended: true, limit: "16kb"}))
+app.use(express.json({ limit: "16kb" }))
+app.use(express.urlencoded({ extended: true, limit: "16kb" }))
 app.use(express.static("public"))
 app.use(cookieParser())
 
@@ -46,7 +48,7 @@ app.use((err, req, res, next) => {
 })
 
 app.get("/test", (req, res) => {
-  res.send("Server working")
+   res.send("Server working")
 })
 
 
