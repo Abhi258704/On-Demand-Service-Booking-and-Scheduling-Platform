@@ -31,7 +31,7 @@ export default function AdminSidebar({ open, setOpen }: Props) {
 
       <aside
         className={`
-    fixed md:static top-0 left-0 h-full w-56 bg-white shadow-lg p-4
+    fixed md:static top-0 left-0 h-full w-56 shrink-0 bg-white shadow-lg p-4
     transform transition-transform duration-300 z-50
     ${open ? "translate-x-0" : "-translate-x-full"}
     md:translate-x-0
