@@ -25,7 +25,7 @@ export default function AdminNavbar() {
 
       <div className="w-[90%] max-w-6xl bg-white shadow-lg rounded-2xl px-8 py-4 flex justify-between items-center">
 
-        {/* Hamburger for mobile */} <button onClick={() => setOpen(true)} className="md:hidden text-2xl" > ☰ </button>
+        {/* Hamburger for mobile <button onClick={() => setOpen(true)} className="md:hidden text-2xl" > ☰ </button> */}
 
         <Link href="/" className="font-bold text-lg">
           ServiceHub
