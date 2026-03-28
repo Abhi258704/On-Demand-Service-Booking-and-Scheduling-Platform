@@ -11,7 +11,7 @@ export default function DashboardNavbar() {
   const router = useRouter()
 
   const handleLogout = async () => {
-    await fetch("http://localhost:8000/api/v1/users/logout", {
+    await fetch("${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/logout", {
       method: "POST",
       credentials: "include"
     })

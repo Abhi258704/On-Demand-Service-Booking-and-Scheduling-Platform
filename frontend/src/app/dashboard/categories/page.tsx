@@ -10,7 +10,7 @@ export default function CategoriesPage() {
 
   useEffect(() => {
 
-    fetch("http://localhost:8000/api/v1/categories/view-categories")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/categories/view-categories`)
       .then(res => res.json())
       .then(data => {
         setCategories(data.data)
@@ -44,7 +44,7 @@ export default function CategoriesPage() {
                 alt={cat.name}
                 fill
                  sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-contain transition duration-300 group-hover:scale-105"
+                className="object-cover transition duration-300 group-hover:scale-105"
               />
 
               {/* Gradient Overlay */}

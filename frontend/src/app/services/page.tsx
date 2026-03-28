@@ -33,7 +33,7 @@ useEffect(() => {
 
 const fetchServices = async () => {
     try {
-        const url = `http://localhost:8000/api/v1/services/viewServices${categoryId ? `?category=${categoryId}` : ""
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/services/viewServices${categoryId ? `?category=${categoryId}` : ""
             }`
 
         const res = await fetch(url)

@@ -2,8 +2,24 @@
 
 import Link from "next/link"
 import { LayoutGrid, Calendar, User, LogOut } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export default function DashboardSidebar() {
+
+
+  const router = useRouter()
+
+  const handleLogout = async () => {
+    await fetch("${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/logout", {
+      method: "POST",
+      credentials: "include"
+    })
+
+    router.push("/") // redirect to landing page
+  }
+
+
+
   return (
     <aside className="w-64 bg-white shadow-xl rounded-2xl p-6 flex flex-col h-[75vh]">
 
@@ -45,7 +61,9 @@ export default function DashboardSidebar() {
       </div>
 
       {/* Logout */}
-      <button className="mt-auto flex items-center gap-3 p-2 rounded-lg text-red-500 hover:bg-red-50">
+      <button
+        onClick={handleLogout}
+        className="mt-auto flex items-center gap-3 p-2 rounded-lg text-red-500 hover:bg-red-50">
         <LogOut size={18} />
         Logout
       </button>

@@ -30,7 +30,7 @@ export default function ProfilePage() {
       try {
 
         const res = await fetch(
-          "http://localhost:8000/api/v1/users/current-user",
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/current-user`,
           { credentials: "include" }
         )
 
@@ -56,7 +56,7 @@ export default function ProfilePage() {
     e.preventDefault()
 
     await fetch(
-      "http://localhost:8000/api/v1/users/update-details",
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/update-details`,
       {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -92,7 +92,7 @@ export default function ProfilePage() {
   }
 
   await fetch(
-    "http://localhost:8000/api/v1/users/change-password",
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/change-password`,
     {
       method: "PATCH",
       headers: {
@@ -117,7 +117,7 @@ export default function ProfilePage() {
     formData.append("pfp", pfpFile)
 
     await fetch(
-      "http://localhost:8000/api/v1/users/update-pfp",
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/update-pfp`,
       {
         method: "PATCH",
         credentials: "include",

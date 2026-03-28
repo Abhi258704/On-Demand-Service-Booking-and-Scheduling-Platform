@@ -55,7 +55,7 @@ export default function RegisterPage() {
         formData.append("pfp", pfp)
       }
 
-      const res = await fetch("http://localhost:8000/api/v1/users/register", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/register`, {
         method: "POST",
         body: formData
       })

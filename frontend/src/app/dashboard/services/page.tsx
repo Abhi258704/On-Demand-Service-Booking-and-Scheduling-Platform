@@ -32,7 +32,7 @@ export default function ServicesPage() {
     async function fetchServices() {
       try {
 
-        const url = `http://localhost:8000/api/v1/services/viewServices${
+        const url = `${process.env.NEXT_PUBLIC_API_URL}/api/v1/services/viewServices${
           categoryId ? `?category=${categoryId}` : ""
         }`
 

@@ -36,7 +36,7 @@ export default function LoginPage() {
     try {
       setLoading(true)
 
-      const res = await fetch("http://localhost:8000/api/v1/users/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -51,7 +51,7 @@ export default function LoginPage() {
       }
 
       const userRes = await fetch(
-        "http://localhost:8000/api/v1/users/current-user",
+        `${process.env.NEXT_PUBLIC_API_URL}/api/v1/users/current-user`,
         { credentials: "include" }
       )
 

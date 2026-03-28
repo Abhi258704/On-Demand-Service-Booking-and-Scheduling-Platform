@@ -110,7 +110,7 @@ export default function ServiceCategories() {
                 {/* Content */}
                 <div className="relative p-6 flex flex-col items-center justify-center h-32">
 
-                  <div className="text-4xl mb-2">🛠️</div>
+                  {/* <div className="text-4xl mb-2">🛠️</div> */}
 
                   <p className="text-white font-medium text-sm text-center">
                     {cat.name}

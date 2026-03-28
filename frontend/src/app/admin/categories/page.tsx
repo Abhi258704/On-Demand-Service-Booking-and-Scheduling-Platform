@@ -34,7 +34,7 @@ export default function AdminCategories() {
         setSelectedCategory(cat)
 
         const res = await fetch(
-            `http://localhost:8000/api/v1/services/category/${cat._id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/api/v1/services/category/${cat._id}`,
             { credentials: "include" }
         )
 
@@ -47,7 +47,7 @@ export default function AdminCategories() {
     const fetchCategories = async () => {
 
         const res = await fetch(
-            "http://localhost:8000/api/v1/categories/view-categories",
+            `${process.env.NEXT_PUBLIC_API_URL}/api/v1/categories/view-categories`,
             {
                 credentials: "include"
             }
@@ -81,7 +81,7 @@ export default function AdminCategories() {
             if (editingId) {
 
                 await fetch(
-                    `http://localhost:8000/api/v1/categories/updateCategory/${editingId}`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/categories/updateCategory/${editingId}`,
                     {
                         method: "PATCH",
                         credentials: "include",
@@ -92,7 +92,7 @@ export default function AdminCategories() {
             } else {
 
                 const res = await fetch(
-                    "http://localhost:8000/api/v1/categories/create",
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/categories/create`,
                     {
                         method: "POST",
                         credentials: "include",
@@ -145,7 +145,7 @@ export default function AdminCategories() {
     const deleteCategory = async (id: string) => {
 
         await fetch(
-            `http://localhost:8000/api/v1/categories/deleteCategory/${id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/api/v1/categories/deleteCategory/${id}`,
             {
                 method: "DELETE",
                 credentials: "include"

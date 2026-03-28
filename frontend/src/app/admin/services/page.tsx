@@ -46,7 +46,7 @@ export default function AdminServices() {
     const fetchServices = async () => {
 
         const res = await fetch(
-            "http://localhost:8000/api/v1/services/viewServices",
+            `${process.env.NEXT_PUBLIC_API_URL}/api/v1/services/viewServices`,
             { credentials: "include" }
         )
 
@@ -58,7 +58,7 @@ export default function AdminServices() {
     const fetchCategories = async () => {
 
         const res = await fetch(
-            "http://localhost:8000/api/v1/categories/view-categories",
+            `${process.env.NEXT_PUBLIC_API_URL}/api/v1/categories/view-categories`,
             { credentials: "include" }
         )
 
@@ -94,7 +94,7 @@ export default function AdminServices() {
             if (editingId) {
 
                 await fetch(
-                    `http://localhost:8000/api/v1/services/update/${editingId}`,
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/services/update/${editingId}`,
                     {
                         method: "PATCH",
                         credentials: "include",
@@ -105,7 +105,7 @@ export default function AdminServices() {
             } else {
 
                 const res = await fetch(
-                    "http://localhost:8000/api/v1/services/create",
+                    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/services/create`,
                     {
                         method: "POST",
                         credentials: "include",
@@ -161,7 +161,7 @@ export default function AdminServices() {
     const deleteService = async (id: string) => {
 
         await fetch(
-            `http://localhost:8000/api/v1/services/delete/${id}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/api/v1/services/delete/${id}`,
             {
                 method: "DELETE",
                 credentials: "include"

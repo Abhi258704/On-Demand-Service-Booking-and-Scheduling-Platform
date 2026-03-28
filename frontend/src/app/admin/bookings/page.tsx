@@ -27,7 +27,7 @@ export default function AdminBookings() {
   const fetchBookings = async () => {
 
     const res = await fetch(
-      "http://localhost:8000/api/v1/bookings/allBookings",
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/bookings/allBookings`,
       { credentials: "include" }
     )
 
@@ -45,7 +45,7 @@ export default function AdminBookings() {
     setLoading(true)
 
     await fetch(
-      `http://localhost:8000/api/v1/bookings/status/${id}`,
+      `${process.env.NEXT_PUBLIC_API_URL}/api/v1/bookings/status/${id}`,
       {
         method: "PATCH",
         credentials: "include",

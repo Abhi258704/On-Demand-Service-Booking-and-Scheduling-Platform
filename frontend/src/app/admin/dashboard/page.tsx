@@ -28,7 +28,7 @@ export default function AdminDashboard() {
       try {
 
         const res = await fetch(
-          "http://localhost:8000/api/v1/admin/stats",
+          `${process.env.NEXT_PUBLIC_API_URL}/api/v1/admin/stats`,
           { credentials: "include" }
         )
 

@@ -26,7 +26,7 @@ export default function DashboardLayout({
           <DashboardSidebar />
 
           {/* Main Content */}
-          <div className="flex-1 bg-white shadow-xl rounded-2xl p-8 overflow-y-auto scroll-smooth">
+          <div className="flex-1 bg-white shadow-xl rounded-2xl p-8 overflow-y-auto h-[75vh] no-scrollbar">
             {children}
           </div>
 
